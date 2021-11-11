@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  // Link
 } from "react-router-dom";
 
 // Components
@@ -55,12 +55,20 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('users', JSON.stringify(users));
+    console.log(users);
   }, [users])
 
   const handleOnDelUser = userId => {
     setUsers(prev => {
       return prev.filter(user => user.id !== userId);
     })
+  }
+
+  const handleOnAddUser = user => {
+    setUsers(prev => ([
+      ...prev,
+      user,
+    ]))
   }
 
   return (
@@ -71,7 +79,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<UserList users={users} onDelUser={handleOnDelUser} />} />
-          <Route path="/create_user" element={<UserPrefPanel panelType={ "create" } />} />
+          <Route path="/create_user" element={<UserPrefPanel panelType={ "create" } onAddUser={handleOnAddUser}/>} />
           <Route path="/update_user" element={<UserPrefPanel panelType={ "update" } />} />
         </Routes>
 
