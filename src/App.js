@@ -41,8 +41,7 @@ function App() {
   ])
 
   return (
-    <div className="App">
-      Empty Project
+    <div className="container pt-4">
       <UserList users={users} />
     </div>
   );
