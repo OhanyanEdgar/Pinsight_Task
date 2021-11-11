@@ -1,9 +1,16 @@
 
 // Important
 import { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 // Components
 import UserList from "./components/UserList"
+import UserPrefPanel from "./components/UserPrefPanel";
 
 function App() {
 
@@ -50,8 +57,6 @@ function App() {
     localStorage.setItem('users', JSON.stringify(users));
   }, [users])
 
-  // const storageUsers = 
-
   const handleOnDelUser = userId => {
     setUsers(prev => {
       return prev.filter(user => user.id !== userId);
@@ -59,9 +64,20 @@ function App() {
   }
 
   return (
-    <div className="container pt-4">
-      <UserList users={users} onDelUser={handleOnDelUser} />
-    </div>
+    <Router>
+      <div className="container pt-4">
+        {/* <UserList users={users} onDelUser={handleOnDelUser} /> */}
+
+
+        <Routes>
+          <Route path="/" element={<UserList users={users} onDelUser={handleOnDelUser} />} />
+          <Route path="/create_user" element={<UserPrefPanel panelType={ "create" } />} />
+          <Route path="/update_user" element={<UserPrefPanel panelType={ "update" } />} />
+        </Routes>
+
+      </div>
+    </Router>
+    
   );
 }
 
