@@ -7,6 +7,8 @@ import {
   Route,
   // Link
 } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 
 // Components
@@ -14,7 +16,6 @@ import UserList from "./components/UserList"
 import UserPrefPanel from "./components/UserPrefPanel";
 
 function App() {
-  
 
   // const [users, setUsers] = useState([
   //   {
@@ -49,42 +50,29 @@ function App() {
   //   },
   // ]);
 
-  const [users, setUsers] = useState(() => {
-    const saved = localStorage.getItem("users");
-    const initialValue = JSON.parse(saved);
-    return initialValue || "";
-  })
 
-  useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(users));
-    console.log(users);
-  }, [users])
 
-  const handleOnDelUser = userId => {
-    setUsers(prev => {
-      return prev.filter(user => user.id !== userId);
-    })
-  }
+  // const [users, setUsers] = useState(() => {
+  //   const saved = localStorage.getItem("users");
+  //   const initialValue = JSON.parse(saved);
+  //   return initialValue || "";
+  // })
 
-  const handleOnAddUser = user => {
-    setUsers(prev => ([
-      ...prev,
-      user,
-    ]))
-  }
+  // useEffect(() => {
+  //   localStorage.setItem('users', JSON.stringify(users));
+  //   console.log(users);
+  // }, [users])
+
+
 
   return (
     <Router>
       <div className="container pt-4">
-        {/* <UserList users={users} onDelUser={handleOnDelUser} /> */}
-
-
         <Routes>
-          <Route path="/" element={<UserList users={users} onDelUser={handleOnDelUser} />} />
-          <Route path="/create_user" element={<UserPrefPanel panelType={ "create" } onAddUser={handleOnAddUser}/>} />
+          <Route path="/" element={<UserList />} />
+          <Route path="/create_user" element={<UserPrefPanel panelType={ "create" } />} />
           <Route path="/update_user" element={<UserPrefPanel panelType={ "update" } />} />
         </Routes>
-
       </div>
     </Router>
     

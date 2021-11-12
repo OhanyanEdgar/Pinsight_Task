@@ -8,6 +8,8 @@
 // Important
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { addUser } from "../state/actions/usersActions";
 
 // Icons
 import { AiOutlineRollback } from 'react-icons/ai';
@@ -15,9 +17,11 @@ import { AiOutlineRollback } from 'react-icons/ai';
 // Comonents
 import PrefPanelInput from "./PrefPanelInput";
 
-const UserPrefPanel = ({ panelType, onAddUser }) => {
+const UserPrefPanel = ({ panelType }) => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     // Collecting user data locally to add(or edit) to actual state. 
     const [user, setUser] = useState({
         username: "",
@@ -35,8 +39,12 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
         password: false,
         billingPlan: false,
         allProps: function() {return Object.values(this).every(prop => prop)},
-    })
+    });
 
+    const handleOnSaveUser = () => {
+        dispatch(addUser(user));
+        navigate("/");
+    };
 
     const handleInputChange = (e) => {
         // If event came from select(billingPlan) we need some logic, else just e.target.value.
@@ -45,7 +53,8 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
         const eventValue = e.target.id === "billingPlan" && 
         e.target.value === "100" && {week: 100} ||
         e.target.value === "350" && {month: 350} || 
-        {year: 4000} && e.target.value;
+        e.target.value === "4000" && {year: 4000} || 
+        e.target.value;
 
         setUser(prev => ({
             ...prev,
@@ -58,8 +67,8 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
             // This check is caused by billing plan->select->option->defaultValue which is doing placeholder job.
             // If the user exidentally selects defaultValue the validation will be false, thanks to this check.
             // [e.target.id]: ifIsValid(e),
-        }))
-    }
+        }));
+    };
 
 
     const ifIsValid = (e) => {
@@ -75,14 +84,8 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
                 return passRegex.test(e.target.value);
             default:
                 return false;
-        }
-
-    }
-
-    const handleOnSaveUser = () => {
-        onAddUser(user);
-        navigate("/");
-    }
+        };
+    };
 
     return (
         <div>

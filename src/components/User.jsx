@@ -1,8 +1,13 @@
 
+// important
+import { useDispatch } from "react-redux"
+import { delUser } from "../state/actions/usersActions";
 
 
+const User = ({ user }) => {
 
-const User = ({ user, onDelUser }) => {
+    const dispatch = useDispatch();
+
     return (
         <div className="card p-2 mt-2" style={{ width: 25+'vw' }}>
             <h5 className="card-title" >Full name: {user.fullName}</h5>
@@ -12,12 +17,12 @@ const User = ({ user, onDelUser }) => {
                 <button className="btn btn-sm btn-primary">Edit</button>
                 <button 
                     className="btn btn-sm btn-danger"
-                    onClick={() => onDelUser(user.id)}
+                    onClick={() => dispatch(delUser(user.id))}
                 >Delete</button>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
 export default User;
+
