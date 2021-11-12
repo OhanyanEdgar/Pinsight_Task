@@ -8,12 +8,12 @@
 // Important
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+// Actions
 import { addUser } from "../state/actions/usersActions";
-
+import { updateUser } from "../state/actions/usersActions";
 // Icons
 import { AiOutlineRollback } from 'react-icons/ai';
-
 // Comonents
 import PrefPanelInput from "./PrefPanelInput";
 
@@ -22,22 +22,32 @@ const UserPrefPanel = ({ panelType }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // Collecting user data locally to add(or edit) to actual state. 
-    const [user, setUser] = useState({
-        username: "",
-        email: "",
-        fullName: "",
-        password: "",
-        billingPlan: {},
-        id: Date.now(),
-      });
+    // editUser is used as local user in case if Panel Type is "update".
+    // It will be more generic to get editUser data from state when it is needed,
+    // but unfortunately we cant use useSelector hook within conditions.
+    const editUser = useSelector(state => state.editUser)
+
+    const [user, setUser] = useState(() => {
+        return panelType === "update" ? {...editUser}:
+        {
+                    username: "",
+                    email: "",
+                    fullName: "",
+                    password: "",
+                    billingPlan: {
+                        name: "",
+                        price: 0,
+                    },
+                    id: Date.now(),
+                }
+    })
     
     const [ifValid, setIfValid] = useState({
-        username: false,
-        email: false,
+        username: panelType === 'update',
+        email: panelType === 'update',
         fullName: panelType === 'update',
-        password: false,
-        billingPlan: false,
+        password: panelType === 'update',
+        billingPlan: panelType === 'update',
         allProps: function() {return Object.values(this).every(prop => prop)},
     });
 
@@ -46,14 +56,19 @@ const UserPrefPanel = ({ panelType }) => {
         navigate("/");
     };
 
+    const handleOnUpdateUser = () => {
+        dispatch(updateUser(user));
+        navigate("/");
+    };
+
     const handleInputChange = (e) => {
         // If event came from select(billingPlan) we need some logic, else just e.target.value.
-        // The logic need is coused by select option value prop.
+        // The logic need is coused by select->option->value prop.
         // We can't give an object to value prop of select option.
         const eventValue = e.target.id === "billingPlan" && 
-        e.target.value === "100" && {week: 100} ||
-        e.target.value === "350" && {month: 350} || 
-        e.target.value === "4000" && {year: 4000} || 
+        e.target.value === "100" && {name: "week", price: 100} ||
+        e.target.value === "350" && {name: "month", price: 350} || 
+        e.target.value === "4000" && {name: "year", price: 4000} || 
         e.target.value;
 
         setUser(prev => ({
@@ -66,10 +81,8 @@ const UserPrefPanel = ({ panelType }) => {
             [e.target.id]: e.target.id === "billingPlan" && typeof eventValue === 'object' || ifIsValid(e),
             // This check is caused by billing plan->select->option->defaultValue which is doing placeholder job.
             // If the user exidentally selects defaultValue the validation will be false, thanks to this check.
-            // [e.target.id]: ifIsValid(e),
         }));
     };
-
 
     const ifIsValid = (e) => {
         const mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -103,24 +116,24 @@ const UserPrefPanel = ({ panelType }) => {
                 <PrefPanelInput name="fullName" type="text" placeholder="Full Name"
                     ifValid={ifValid} onInputChange={handleInputChange}
                     errorLog="Full name requires 3 or more letters"
-                    disabled={panelType === 'update'}
+                    disabled={panelType === 'update'} value={user.fullName}
                 />
                 <PrefPanelInput name="email" type="email" placeholder="Email address"
                     ifValid={ifValid} onInputChange={handleInputChange}
-                    errorLog="Enter valid email"
+                    errorLog="Enter valid email" value={user.email}
                 />
                 <PrefPanelInput name="username" type="text" placeholder="Username"
                     ifValid={ifValid} onInputChange={handleInputChange}
-                    errorLog="Username requires 3 or more letters"
+                    errorLog="Username requires 3 or more letters" value={user.username}
                 />
                 <PrefPanelInput name="password" type="password" placeholder="Password"
-                    ifValid={ifValid} onInputChange={handleInputChange}  
+                    ifValid={ifValid} onInputChange={handleInputChange} value={user.password}
                     errorLog="Password requires [A-Z], [0-9], [!@#$&*], at least 8 characters. "
                 />
 
                 <select className="form-select form-control" aria-label="Default select example" required
                     className={ ifValid.billingPlan && "is-valid form-select mb-3" || "is-invalid form-select" }
-                    id="billingPlan" onChange={e => handleInputChange(e)} 
+                    id="billingPlan" onChange={e => handleInputChange(e)} value={user.billingPlan.price}
                 >
                     <option defaultValue>Choose Billing Plan</option>
                     <option value="100">Week: 100 $</option>
@@ -130,12 +143,14 @@ const UserPrefPanel = ({ panelType }) => {
                 <div className="invalid-feedback mb-3">Billing plan required</div>
                 
                 <div className="d-flex align-items-center">
-                    <button onClick={ handleOnSaveUser }
-                    className={ ifValid.allProps()? "btn btn-success": "btn btn-warning disabled" }
-                    >
-                        Save User
+                    <button onClick={panelType === "update" && handleOnUpdateUser || handleOnSaveUser }
+                    className={ ifValid.allProps()? "btn btn-success": "btn btn-warning disabled" }>
+                        {panelType === "update" && "Update User" || "Save User"}
                     </button>
-                    <h6 className="ms-3 fs-6 text-warning fw-light fst-italic"> {!ifValid.allProps() && "Please fill all required fields"}</h6>
+
+                    <h6 className="ms-3 fs-6 text-warning fw-light fst-italic"> 
+                        {!ifValid.allProps() && "Please fill all required fields."}
+                    </h6>
                 </div>
             </div>
         </div>

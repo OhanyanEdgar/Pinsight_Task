@@ -8,9 +8,11 @@ const usersReducer = (state = [], action) => {
       case types.DEL_USER:
         return state.filter(user => user.id !== action.payload);
       case types.ADD_USER:
-        return [...state, action.payload];
+        return [action.payload, ...state];
+      case types.UPDATE_USER:
+        return state.map(user => user.id === action.payload.id ? action.payload : user)
       default:
-          return state;
+        return state;
     };
 };
 

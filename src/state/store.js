@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import reducers from "./reducers";
 
 const persistedState = localStorage.getItem("users") &&
-                       JSON.parse(localStorage.getItem("users")) || "" ;
+                       JSON.parse(localStorage.getItem("users")) || {} ;
                        
 
 const store = createStore(reducers, persistedState,
