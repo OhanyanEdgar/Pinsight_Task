@@ -12,6 +12,9 @@ import { useNavigate } from 'react-router-dom';
 // Icons
 import { AiOutlineRollback } from 'react-icons/ai';
 
+// Comonents
+import PrefPanelInput from "./PrefPanelInput";
+
 const UserPrefPanel = ({ panelType, onAddUser }) => {
 
     const navigate = useNavigate();
@@ -24,7 +27,16 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
         billingPlan: {},
         id: Date.now(),
       });
-    console.log("Local user:", user);
+    
+    const [ifValid, setIfValid] = useState({
+        username: false,
+        email: false,
+        fullName: panelType === 'update',
+        password: false,
+        billingPlan: false,
+        allProps: function() {return Object.values(this).every(prop => prop)},
+    })
+
 
     const handleInputChange = (e) => {
         // If event came from select(billingPlan) we need some logic, else just e.target.value.
@@ -39,7 +51,37 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
             ...prev,
             [e.target.id]: eventValue,
         }));
-        console.log("e.target: ", e.target);
+
+        setIfValid(prev => ({
+            ...prev,
+            [e.target.id]: e.target.id === "billingPlan" && typeof eventValue === 'object' || ifIsValid(e),
+            // This check is caused by billing plan->select->option->defaultValue which is doing placeholder job.
+            // If the user exidentally selects defaultValue the validation will be false, thanks to this check.
+            // [e.target.id]: ifIsValid(e),
+        }))
+    }
+
+
+    const ifIsValid = (e) => {
+        const mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const passRegex = /^(?=.*[A-Z].)(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,32}$/;
+        switch(e.target.id){
+            case "fullName":
+            case "username":
+                return e.target.value.length > 2;
+            case "email":
+                return mailRegex.test(e.target.value);
+            case "password":
+                return passRegex.test(e.target.value);
+            default:
+                return false;
+        }
+
+    }
+
+    const handleOnSaveUser = () => {
+        onAddUser(user);
+        navigate("/");
     }
 
     return (
@@ -55,48 +97,44 @@ const UserPrefPanel = ({ panelType, onAddUser }) => {
                 <h3 className="pb-2">
                     {panelType === "create" && "Create new user " || "Edit user"}
                 </h3>
-                <div className="form-floating mb-3">
-                    <input type="text" className="form-control" 
-                        id="fullName" placeholder="Full Name" value={user.fullName}
-                        onChange={e => handleInputChange(e)}
-                        disabled={panelType === 'update' && true}
-                    />
-                    <label htmlFor="fullName">Full Name</label>
-                </div>
-                <div className="form-floating mb-3">
-                    <input type="email" className="form-control" 
-                        id="email" placeholder="name@example.com" 
-                        onChange={e => handleInputChange(e)}
-                    />
-                    <label htmlFor="email">Email address</label>
-                </div>
-                <div className="form-floating mb-3">
-                    <input type="text" className="form-control" 
-                        id="username" placeholder="Username" 
-                        onChange={e => handleInputChange(e)}
-                    />
-                    <label htmlFor="username">Username</label>
-                </div>
-                <div className="form-floating mb-3">
-                    <input type="password" className="form-control" 
-                        id="password" placeholder="Password" 
-                        onChange={e => handleInputChange(e)}
-                    />
-                    <label htmlFor="password">Password</label>
-                </div>
-                <select className="form-select mb-3" aria-label="Default select example"
-                    id="billingPlan" onChange={e => handleInputChange(e)}
+                <PrefPanelInput name="fullName" type="text" placeholder="Full Name"
+                    ifValid={ifValid} onInputChange={handleInputChange}
+                    errorLog="Full name requires 3 or more letters"
+                    disabled={panelType === 'update'}
+                />
+                <PrefPanelInput name="email" type="email" placeholder="Email address"
+                    ifValid={ifValid} onInputChange={handleInputChange}
+                    errorLog="Enter valid email"
+                />
+                <PrefPanelInput name="username" type="text" placeholder="Username"
+                    ifValid={ifValid} onInputChange={handleInputChange}
+                    errorLog="Username requires 3 or more letters"
+                />
+                <PrefPanelInput name="password" type="password" placeholder="Password"
+                    ifValid={ifValid} onInputChange={handleInputChange}  
+                    errorLog="Password requires [A-Z], [0-9], [!@#$&*], at least 8 characters. "
+                />
+
+                <select className="form-select form-control" aria-label="Default select example" required
+                    className={ ifValid.billingPlan && "is-valid form-select mb-3" || "is-invalid form-select" }
+                    id="billingPlan" onChange={e => handleInputChange(e)} 
                 >
                     <option defaultValue>Choose Billing Plan</option>
                     <option value="100">Week: 100 $</option>
                     <option value="350">Month: 350 $</option>
                     <option value="4000">Year: 4000 $</option>
                 </select>
-                <button className="btn btn-success"
-                    onClick={() => onAddUser(user)}
-                >Save User</button>
+                <div className="invalid-feedback mb-3">Billing plan required</div>
+                
+                <div className="d-flex align-items-center">
+                    <button onClick={ handleOnSaveUser }
+                    className={ ifValid.allProps()? "btn btn-success": "btn btn-warning disabled" }
+                    >
+                        Save User
+                    </button>
+                    <h6 className="ms-3 fs-6 text-warning fw-light fst-italic"> {!ifValid.allProps() && "Please fill all required fields"}</h6>
+                </div>
             </div>
-            
         </div>
     )
 };
