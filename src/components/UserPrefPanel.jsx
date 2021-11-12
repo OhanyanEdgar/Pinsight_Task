@@ -30,16 +30,16 @@ const UserPrefPanel = ({ panelType }) => {
     const [user, setUser] = useState(() => {
         return panelType === "update" ? {...editUser}:
         {
-                    username: "",
-                    email: "",
-                    fullName: "",
-                    password: "",
-                    billingPlan: {
-                        name: "",
-                        price: 0,
-                    },
-                    id: Date.now(),
-                }
+            username: "",
+            email: "",
+            fullName: "",
+            password: "",
+            billingPlan: {
+                name: "",
+                price: 0,
+            },
+            id: Date.now(),
+        }
     })
     
     const [ifValid, setIfValid] = useState({
