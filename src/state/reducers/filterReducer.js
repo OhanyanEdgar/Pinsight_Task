@@ -7,7 +7,7 @@ const initialFilter = {
     name: ""
 }
 
-export const filterReducer = (state = initialFilter, action) => {
+const filterReducer = (state = initialFilter, action) => {
     switch (action.type){
         case types.FILTER_CRITERION:
             return action.payload;
@@ -15,3 +15,5 @@ export const filterReducer = (state = initialFilter, action) => {
             return state;
     }
 }
+
+export default filterReducer;
