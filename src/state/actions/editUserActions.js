@@ -1,6 +1,4 @@
 
-
-
 export const types = {
     EDIT_USER: "EDIT_USER",
 }

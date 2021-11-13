@@ -131,7 +131,7 @@ const UserPrefPanel = ({ panelType }) => {
                     errorLog="Password requires [A-Z], [0-9], [!@#$&*], at least 8 characters. "
                 />
 
-                <select className="form-select form-control" aria-label="Default select example" required
+                <select className="form-select form-control" required
                     className={ ifValid.billingPlan && "is-valid form-select mb-3" || "is-invalid form-select" }
                     id="billingPlan" onChange={e => handleInputChange(e)} value={user.billingPlan.price}
                 >

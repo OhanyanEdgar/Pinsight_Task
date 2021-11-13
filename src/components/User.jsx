@@ -18,10 +18,10 @@ const User = ({ user }) => {
     }
 
     return (
-        <div className="card p-2 mt-2" style={{ 'maxWidth': 400+'px' }}>
-            <h5 className="card-title" >Full name: {user.fullName}</h5>
-            <p className="card-text" >Username: {user.username}</p>
-            <p className="card-text" >Mail: {user.email}</p>
+        <div className="card border-3 p-2 mt-2" style={{'width': 300+'px'}}>
+            <h4 className="card-title" >Full name: {user.fullName}</h4>
+            <h6 className="card-text" >Username: {user.username}</h6>
+            <h6 className="card-text" >Mail: {user.email}</h6>
             <div className="btn-toolbar d-flex justify-content-evenly">
                 <button 
                     className="btn btn-sm btn-primary"

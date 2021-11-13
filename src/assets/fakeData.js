@@ -1,4 +1,4 @@
-export default [
+const fakeData = [
     {
         username: "pweall0",
         email: "pweall0@typepad.com",
@@ -163,5 +163,7 @@ export default [
             price: 4000,
         },
         id: Date.now()+15,
-    },
-]
+    }
+];
+
+export default fakeData;
