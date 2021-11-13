@@ -9,8 +9,10 @@ import { setFilterCriterion } from "../state/actions/filterActions";
 import { countUsers } from "../state/actions/usersCountActions";
 import { setUsersToShow } from "../state/actions/usersToShowActions"
 // Components
-import User from "./User";
-import PaginatedItems from "./Pagination";
+import User from "../components/User";
+import PaginatedItems from "../components/Pagination";
+// Icons
+import { GoHome } from 'react-icons/go';
 
 const UserList = () => {
 
@@ -53,6 +55,11 @@ const UserList = () => {
 
     return (
         <div className="d-flex justify-content-center">
+            <div className="btn btn-outline-primary rounded-circle d-flex me-2" 
+                style={{ height: 55+'px', width: 55+'px'}}
+                onClick={() => navigate("/")}>
+                <GoHome size={40} />
+            </div>
             <div 
                 className="border border-3 p-3 rounded-3 
                 d-flex flex-column align-items-center"

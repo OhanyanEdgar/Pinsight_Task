@@ -8,7 +8,7 @@ const fakeData = [
             name: "week",
             price: 100,
         },
-        id: Date.now()+1,
+        id: 1,
     },
     {
         username: "eduetschens1",
@@ -19,7 +19,7 @@ const fakeData = [
             name: "week",
             price: 100,
         },
-        id: Date.now()+2,
+        id: 2,
     },
     {
         username: "skingsly2",
@@ -30,7 +30,7 @@ const fakeData = [
             name: "week",
             price: 100,
         },
-        id: Date.now()+3,
+        id: 3,
     },
     {
         username: "wbarck4",
@@ -41,7 +41,7 @@ const fakeData = [
             name: "week",
             price: 100,
         },
-        id: Date.now()+4,
+        id: 4,
     },
     {
         username: "cyon3",
@@ -52,7 +52,7 @@ const fakeData = [
             name: "week",
             price: 100,
         },
-        id: Date.now()+5,
+        id: 5,
     },
     {
         username: "jtonn5",
@@ -63,7 +63,7 @@ const fakeData = [
             name: "month",
             price: 350,
         },
-        id: Date.now()+6,
+        id: 6,
     },
     {
         username: "tmitro6",
@@ -74,7 +74,7 @@ const fakeData = [
             name: "month",
             price: 350,
         },
-        id: Date.now()+7,
+        id: 7,
     },
     {
         username: "mruslin7",
@@ -85,7 +85,7 @@ const fakeData = [
             name: "month",
             price: 350,
         },
-        id: Date.now()+8,
+        id: 8,
     },
     {
         username: "ade8",
@@ -96,7 +96,7 @@ const fakeData = [
             name: "month",
             price: 350,
         },
-        id: Date.now()+9,
+        id: 9,
     },
     {
         username: "gderby9",
@@ -107,7 +107,7 @@ const fakeData = [
             name: "month",
             price: 350,
         },
-        id: Date.now()+10,
+        id: 10,
     },
     {
         username: "bpaceya",
@@ -118,7 +118,7 @@ const fakeData = [
             name: "year",
             price: 4000,
         },
-        id: Date.now()+11,
+        id: 11,
     },
     {
         username: "msherrumc",
@@ -129,7 +129,7 @@ const fakeData = [
             name: "year",
             price: 4000,
         },
-        id: Date.now()+12,
+        id: 12,
     },
     {
         username: "eblockleyd",
@@ -140,7 +140,7 @@ const fakeData = [
             name: "year",
             price: 4000,
         },
-        id: Date.now()+13,
+        id: 13,
     },
     {
         username: "iconquere",
@@ -151,7 +151,7 @@ const fakeData = [
             name: "year",
             price: 4000,
         },
-        id: Date.now()+14,
+        id: 14,
     },
     {
         username: "ejochenf",
@@ -162,7 +162,7 @@ const fakeData = [
             name: "year",
             price: 4000,
         },
-        id: Date.now()+15,
+        id: 15,
     }
 ];
 

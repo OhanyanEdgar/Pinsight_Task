@@ -16,7 +16,7 @@ import { editUser } from "../state/actions/editUserActions";
 // Icons
 import { AiOutlineRollback } from 'react-icons/ai';
 // Comonents
-import PrefPanelInput from "./PrefPanelInput";
+import PrefPanelInput from "../components/PrefPanelInput"
 
 const UserPrefPanel = ({ panelType }) => {
 
@@ -54,18 +54,18 @@ const UserPrefPanel = ({ panelType }) => {
 
     const handleOnSaveUser = () => {
         dispatch(addUser(user));
-        navigate("/");
+        navigate("/user_list");
     };
 
     const handleOnUpdateUser = () => {
         dispatch(updateUser(user));
         dispatch(editUser({}));
-        navigate("/");
+        navigate("/user_list");
     };
 
     const handleBackToUserList = () => {
         dispatch(editUser({}));
-        navigate("/")
+        navigate("/user_list")
     }
 
     const handleInputChange = (e) => {

@@ -12,7 +12,7 @@ const usersReducer = (state = [], action) => {
       case types.UPDATE_USER:
         return state.map(user => user.id === action.payload.id ? action.payload : user);
       case types.FILL_FAKE_DATA:
-        return [...state, ...action.payload]
+        return [...state, ...action.payload.map(user => ({...user, id: user.id + Date.now()}))]
       default:
         return state;
     };

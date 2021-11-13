@@ -7,8 +7,9 @@ import {
 } from "react-router-dom";
 
 // Components
-import UserList from "./components/UserList"
-import UserPrefPanel from "./components/UserPrefPanel";
+import Home from "./pages/Home"
+import UserList from "./pages/UserList";
+import UserPrefPanel from "./pages/UserPrefPanel";
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
     <Router>
       <div className="container pt-4">
         <Routes>
-          <Route path="/" element={<UserList />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/user_list" element={<UserList /> } />
           <Route path="/create_user" element={<UserPrefPanel panelType={ "create" } />} />
           <Route path="/update_user" element={<UserPrefPanel panelType={ "update" } />} />
         </Routes>
