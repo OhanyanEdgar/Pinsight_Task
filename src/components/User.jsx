@@ -28,11 +28,6 @@ const User = ({ user }) => {
                     onClick={() => handleEditUser(user)}>
                         Edit
                 </button>
-
-                {/* <button 
-                    className="btn btn-sm btn-danger"
-                    onClick={() => dispatch(delUser(user.id))}
-                >Delete</button> */}
                 <DialogPopUp user={user} />
             </div>
         </div>

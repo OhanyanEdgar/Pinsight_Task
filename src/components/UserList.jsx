@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { fillFakeData } from "../state/actions/usersActions";
 import { setFilterCriterion } from "../state/actions/filterActions";
 import { countUsers } from "../state/actions/usersCountActions";
+import { editUser } from "../state/actions/editUserActions";
 // Components
 import User from "./User";
 
@@ -18,40 +19,36 @@ const UserList = () => {
     const filterCriterion = useSelector(state => state.filter)
     const {all, week, month, year} = useSelector(state => state.counter)
     const [usersToShow, setUsersToShow] = useState([])
-    console.log(all, week, month, year);
-
-    // const [usersCounter, setUsersCounter] = useState({
-    //     all: 0,
-    //     week: 0,
-    //     month: 0,
-    //     year: 0,
-    // })
-
-    // useEffect(() => {
-    //     setUsersCounter({
-    //         all: users.length,
-    //         week: users.filter(user => user.billingPlan.name === 'week').length,
-    //         month: users.filter(user => user.billingPlan.name === 'month').length,
-    //         year: users.filter(user => user.billingPlan.name === 'year').length,
-    //     })
-    // }, [users])
-
-    // console.log(usersCounter);
 
     useEffect(() => {
-        handelFilterByBilling(filterCriterion);
+        handleFilterUsers(filterCriterion);
         dispatch(countUsers(users))
     }, [filterCriterion, users])
 
-    const handelFilterByBilling = bill => {
-        setUsersToShow(bill === "all" && users ||
-            users.filter(user => user.billingPlan.price === Number(bill))
-        );
+    const handleFilterUsers = criterion => {
+        const { bill, name } = criterion;
+        // This check covers both filters by nasting the result of Bill filter into Name filter.
+        const filterByBill = bill === "all" && users ||
+            users.filter(user => user.billingPlan.price === Number(criterion.bill));
+        const filterByName = name === "" && filterByBill ||
+            filterByBill.filter(user => user.username.includes(name));
+
+        setUsersToShow(filterByName)
     };
 
-    const handleOnSelectChange = e => {
-        dispatch(setFilterCriterion(e.target.value));
-    }
+    const handleFilterNameChange = name => {
+        dispatch(setFilterCriterion({
+            ...filterCriterion,
+            name,
+        }));
+    };
+   
+    const handleFilterBillChange = bill => {
+        dispatch(setFilterCriterion({
+            ...filterCriterion,
+            bill,
+        }));
+    };
 
     return (
         <div className="d-flex justify-content-center">
@@ -60,11 +57,20 @@ const UserList = () => {
                 d-flex flex-column align-items-center"
                 style={{'width': 500+'px'}}>
 
+                <div className="input-group mb-3" >
+                    <span className="input-group-text">Filter By Name</span>
+                    <input 
+                        type="text" className="form-control" 
+                        placeholder="Username" value={filterCriterion.name} 
+                        onChange={e => handleFilterNameChange(e.target.value)}
+                    />
+                </div>
+
                 <div className="input-group">
                     <label className="input-group-text" htmlFor="billingPlan">Filter By Billing Plan</label>
                     <select className="form-select"id="billingPlan" 
-                        onChange={e => handleOnSelectChange(e)} 
-                        value={filterCriterion}
+                        onChange={e => handleFilterBillChange(e.target.value)} 
+                        value={filterCriterion.bill}
                     >
                         <option value="all">Show All ({all} users)</option>
                         <option value="100">Week: 100 $ ({week} users)</option>

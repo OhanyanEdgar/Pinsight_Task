@@ -2,7 +2,12 @@
 // Important
 import { types } from "../actions/filterActions";
 
-export const filterReducer = (state = "all", action) => {
+const initialFilter = {
+    bill: "all",
+    name: ""
+}
+
+export const filterReducer = (state = initialFilter, action) => {
     switch (action.type){
         case types.FILTER_CRITERION:
             return action.payload;

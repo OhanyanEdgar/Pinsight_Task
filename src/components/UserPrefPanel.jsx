@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 // Actions
 import { addUser } from "../state/actions/usersActions";
 import { updateUser } from "../state/actions/usersActions";
+import { editUser } from "../state/actions/editUserActions";
 // Icons
 import { AiOutlineRollback } from 'react-icons/ai';
 // Comonents
@@ -22,13 +23,13 @@ const UserPrefPanel = ({ panelType }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // editUser is used as local user in case if Panel Type is "update".
+    // editedUser is used as local user in case if Panel Type is "update".
     // It will be more generic to get editUser data from state when it is needed,
     // but unfortunately we cant use useSelector hook within conditions.
-    const editUser = useSelector(state => state.editUser)
+    const editedUser = useSelector(state => state.editUser)
 
     const [user, setUser] = useState(() => {
-        return panelType === "update" ? {...editUser}:
+        return panelType === "update" ? {...editedUser}:
         {
             username: "",
             email: "",
@@ -58,8 +59,14 @@ const UserPrefPanel = ({ panelType }) => {
 
     const handleOnUpdateUser = () => {
         dispatch(updateUser(user));
+        dispatch(editUser({}));
         navigate("/");
     };
+
+    const handleBackToUserList = () => {
+        dispatch(editUser({}));
+        navigate("/")
+    }
 
     const handleInputChange = (e) => {
         // If event came from select(billingPlan) we need some logic, else just e.target.value.
@@ -104,7 +111,7 @@ const UserPrefPanel = ({ panelType }) => {
         <div>
             <button 
                 className="btn btn-outline-primary btn-sm fs-6 mb-3" 
-                onClick={() => navigate("/")}
+                onClick={handleBackToUserList}
             >
                 User List
                 <AiOutlineRollback  size={25}/>
