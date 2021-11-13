@@ -3,7 +3,7 @@
 import { types } from "../actions/editUserActions";
 
 
-const editUserReducer = (state = {}, action) => {
+export const editUserReducer = (state = {}, action) => {
     switch(action.type){
       case types.EDIT_USER:
           return action.payload;
@@ -11,5 +11,3 @@ const editUserReducer = (state = {}, action) => {
         return state;
     };
 };
-
-export default editUserReducer;

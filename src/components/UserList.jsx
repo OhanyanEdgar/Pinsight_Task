@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // Actions
 import { fillFakeData } from "../state/actions/usersActions";
 import { setFilterCriterion } from "../state/actions/filterActions";
+import { countUsers } from "../state/actions/usersCountActions";
 // Components
 import User from "./User";
 
@@ -15,16 +16,41 @@ const UserList = () => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
     const filterCriterion = useSelector(state => state.filter)
+    const {all, week, month, year} = useSelector(state => state.counter)
     const [usersToShow, setUsersToShow] = useState([])
+    console.log(all, week, month, year);
+
+    // const [usersCounter, setUsersCounter] = useState({
+    //     all: 0,
+    //     week: 0,
+    //     month: 0,
+    //     year: 0,
+    // })
+
+    // useEffect(() => {
+    //     setUsersCounter({
+    //         all: users.length,
+    //         week: users.filter(user => user.billingPlan.name === 'week').length,
+    //         month: users.filter(user => user.billingPlan.name === 'month').length,
+    //         year: users.filter(user => user.billingPlan.name === 'year').length,
+    //     })
+    // }, [users])
+
+    // console.log(usersCounter);
 
     useEffect(() => {
         handelFilterByBilling(filterCriterion);
+        dispatch(countUsers(users))
     }, [filterCriterion, users])
 
     const handelFilterByBilling = bill => {
         setUsersToShow(bill === "all" && users ||
-        users.filter(user => user.billingPlan.price === Number(bill))
-        )
+            users.filter(user => user.billingPlan.price === Number(bill))
+        );
+    };
+
+    const handleOnSelectChange = e => {
+        dispatch(setFilterCriterion(e.target.value));
     }
 
     return (
@@ -37,13 +63,13 @@ const UserList = () => {
                 <div className="input-group">
                     <label className="input-group-text" htmlFor="billingPlan">Filter By Billing Plan</label>
                     <select className="form-select"id="billingPlan" 
-                        onChange={e => dispatch(setFilterCriterion(e.target.value))} 
+                        onChange={e => handleOnSelectChange(e)} 
                         value={filterCriterion}
                     >
-                        <option value="all">Show All</option>
-                        <option value="100">Week: 100 $</option>
-                        <option value="350">Month: 350 $</option>
-                        <option value="4000">Year: 4000 $</option>
+                        <option value="all">Show All ({all} users)</option>
+                        <option value="100">Week: 100 $ ({week} users)</option>
+                        <option value="350">Month: 350 $ ({month} users)</option>
+                        <option value="4000">Year: 4000 $ ({year} users)</option>
                 </select>
                 </div>
                 
