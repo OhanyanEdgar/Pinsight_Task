@@ -95,6 +95,9 @@ const Home = () => {
                 <TaskItem 
                     text="- Users per page functionality." 
                 />
+                <TaskItem 
+                    text="- Drag & Drop functionality for Users." 
+                />
 
             </div>
             <div className="footer mt-3 d-flex align-items-center">

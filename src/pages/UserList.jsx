@@ -20,7 +20,7 @@ const UserList = () => {
     const users = useSelector(state => state.users);
     const filterCriterion = useSelector(state => state.filter);
     const {all, week, month, year} = useSelector(state => state.counter);
-    const [pageCount, setPageCount] = useState(5)
+    const [pageCount, setPageCount] = useState(5);
 
     useEffect(() => {
         handleFilterUsers(filterCriterion);
@@ -88,7 +88,6 @@ const UserList = () => {
                 
                 <div 
                     style={{'width': 100+'%'}}
-                    // className=" pt-3"
                     className="d-flex justify-content-evenly pt-3"
                     >
 

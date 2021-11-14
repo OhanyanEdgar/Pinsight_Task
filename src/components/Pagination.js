@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { useSelector } from "react-redux";
 // Components
+import DraggableUsers from "./DraggableUsers";
 import User from "./User";
 
 const Users = ({ current }) => {
-    return current && current.map(user => <User user={user} key={user.id} />);
+    // return current && current.map(user => <User user={user} key={user.id} />);
+    return current && <DraggableUsers users={current}  />
 };
 
 const PaginatedUsers = ({ usersPerPage }) => {
