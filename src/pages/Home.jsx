@@ -17,7 +17,7 @@ const Home = () => {
                     The task is to create a simple user management CRUD Application
                 </p>
             </div>
-            <div className="requirements border-bottom">
+            <div className="requirements border-bottom pb-3">
                 <h3 className="font-monospace">Requirements</h3>
                 <h5 className="mt-3">User List</h5>
                 <TaskItem status="done"
@@ -91,6 +91,9 @@ const Home = () => {
                 />
                 <TaskItem 
                     text="- User counter." 
+                />
+                <TaskItem 
+                    text="- Users per page functionality." 
                 />
 
             </div>
