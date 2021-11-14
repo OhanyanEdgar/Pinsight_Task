@@ -37,7 +37,8 @@ const PaginatedUsers = ({ usersPerPage }) => {
       <Users current={currentUsers} />
       <ReactPaginate
         onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={1}
         pageCount={pageCount}
         pageClassName="page-item"
         pageLinkClassName="page-link"

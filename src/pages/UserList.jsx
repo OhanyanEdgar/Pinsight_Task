@@ -1,6 +1,6 @@
 
 // Important
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 // Actions
@@ -20,6 +20,7 @@ const UserList = () => {
     const users = useSelector(state => state.users);
     const filterCriterion = useSelector(state => state.filter);
     const {all, week, month, year} = useSelector(state => state.counter);
+    const [pageCount, setPageCount] = useState(5)
 
     useEffect(() => {
         handleFilterUsers(filterCriterion);
@@ -86,20 +87,34 @@ const UserList = () => {
                 </div>
                 
                 <div 
-                    style={{'width': 300+'px'}}
-                    className="d-flex justify-content-evenly pt-3">
+                    style={{'width': 100+'%'}}
+                    // className=" pt-3"
+                    className="d-flex justify-content-evenly pt-3"
+                    >
 
                     <button className="btn btn-success"
                         onClick={() => navigate("/create_user")}>
                             Create User
                     </button>
-                    <button className="btn btn-outline-primary"
+                    <button className="btn btn-outline-primary "
                         onClick={() => dispatch(fillFakeData())}>
                         Fill Fake Users
                     </button>
+
+                    <div className="input-group" style={{'width': 35+'%'}}>
+                        <label className="input-group-text" htmlFor="usersPerPage">Per Page</label>
+                        <select className="form-select " id="usersPerPage"
+                            onChange={e => setPageCount(e.target.value)} 
+                            value={pageCount}
+                        >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
                 </div>
                 
-                <PaginatedUsers usersPerPage={5} />
+                <PaginatedUsers usersPerPage={pageCount} />
             </div>
         </div>
     );

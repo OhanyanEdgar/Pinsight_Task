@@ -18,7 +18,7 @@ const User = ({ user }) => {
     };
 
     return (
-        <div className="card border-3 p-2 mt-2" style={{'width': 300+'px'}}>
+        <div className="card border-3 p-2 mt-2" style={{'width': 350+'px'}}>
             <h4 className="card-title" >Full name: {user.fullName}</h4>
             <h6 className="card-text" >Username: {user.username}</h6>
             <h6 className="card-text" >Mail: {user.email}</h6>
@@ -28,6 +28,7 @@ const User = ({ user }) => {
                     onClick={() => handleEditUser(user)}>
                         Edit
                 </button>
+        
                 <DialogPopUp user={user} />
             </div>
         </div>
