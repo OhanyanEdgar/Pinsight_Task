@@ -60,8 +60,8 @@ const fakeData = [
         fullName: "Jim Tonn",
         password: "Fslh1iSP@",
         billingPlan: {
-            name: "month",
-            price: 350,
+            name: "week",
+            price: 100,
         },
         id: 6,
     },
@@ -115,8 +115,8 @@ const fakeData = [
         fullName: "Bendix Pacey",
         password: "l@hyCj2!$6F#og",
         billingPlan: {
-            name: "year",
-            price: 4000,
+            name: "month",
+            price: 350,
         },
         id: 11,
     },
@@ -126,8 +126,8 @@ const fakeData = [
         fullName: "Moyra Sherrum",
         password: "CGl@b9N#zAH!tR",
         billingPlan: {
-            name: "year",
-            price: 4000,
+            name: "month",
+            price: 350,
         },
         id: 12,
     },
