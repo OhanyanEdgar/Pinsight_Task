@@ -21,6 +21,8 @@ const UserList = () => {
     const filterCriterion = useSelector(state => state.filter);
     const {all, week, month, year} = useSelector(state => state.counter);
     const [pageCount, setPageCount] = useState(5);
+    const [enableDandD, setEnableDandD] = useState(false)
+    console.log(enableDandD);
 
     useEffect(() => {
         handleFilterUsers(filterCriterion);
@@ -86,8 +88,7 @@ const UserList = () => {
                 </select>
                 </div>
                 
-                <div 
-                    style={{'width': 100+'%'}}
+                <div style={{'width': 100+'%'}}
                     className="d-flex justify-content-evenly pt-3"
                     >
 
@@ -99,8 +100,10 @@ const UserList = () => {
                         onClick={() => dispatch(fillFakeData())}>
                         Fill Fake Users
                     </button>
+                </div>
 
-                    <div className="input-group" style={{'width': 35+'%'}}>
+                <div className="d-flex justify-content-around pt-3" style={{'width': 100+'%'}}>
+                    <div className="input-group" >
                         <label className="input-group-text" htmlFor="usersPerPage">Per Page</label>
                         <select className="form-select " id="usersPerPage"
                             onChange={e => setPageCount(e.target.value)} 
@@ -111,9 +114,23 @@ const UserList = () => {
                             <option value="20">20</option>
                         </select>
                     </div>
+
+                    <div className="input-group form-check form-switch">
+                        <span className="input-group-text" htmlFor="drag&drop">Drag & Drop</span>
+                        <span className="input-group-text" style={{width: 55+"px"}}>
+                            <input 
+                            className="form-check-input ms-0" 
+                                type="checkbox" role="switch" 
+                                id="drag&drop" value={enableDandD}
+                                onClick={e => setEnableDandD(e.target.checked)}
+                                />
+                        </span>
+                    </div>                    
+                    
                 </div>
+
                 
-                <PaginatedUsers usersPerPage={pageCount} />
+                <PaginatedUsers trigger={enableDandD}  usersPerPage={pageCount} />
             </div>
         </div>
     );

@@ -7,15 +7,18 @@ import { useSelector } from "react-redux";
 import DraggableUsers from "./DraggableUsers";
 import User from "./User";
 
-const Users = ({ current }) => {
-    // return current && current.map(user => <User user={user} key={user.id} />);
-    return current && <DraggableUsers users={current}  />
+const Users = ({ current, trigger, setCurrentUsers }) => {
+
+  return trigger &&
+  current && <DraggableUsers users={current} setCurrentUsers={setCurrentUsers} /> ||
+  current && current.map(user => <User user={user} key={user.id} />);
 };
 
-const PaginatedUsers = ({ usersPerPage }) => {
+const PaginatedUsers = ({ usersPerPage, trigger }) => {
   const usersToShow = useSelector(state => state.usersToShow);
-  console.log("PaginatedUsers-> usersToShow:", usersToShow);
+
   const [currentUsers, setCurrentUsers] = useState(null);
+
   const [pageCount, setPageCount] = useState(0);
   const [userOffset, setUserOffset] = useState(0);
 
@@ -24,7 +27,6 @@ const PaginatedUsers = ({ usersPerPage }) => {
       console.log(`Loading users from ${userOffset} to ${endOffset}`);
       setCurrentUsers(usersToShow.slice(userOffset, endOffset));
       setPageCount(Math.ceil(usersToShow.length / usersPerPage));
-      console.log("PaginatedUsers -> currentUsers:", currentUsers);
   }, [userOffset, usersPerPage, usersToShow]);
 
   // Invoke when user click to request another page.
@@ -36,7 +38,7 @@ const PaginatedUsers = ({ usersPerPage }) => {
 
   return (
     <>
-      <Users current={currentUsers} />
+      <Users current={currentUsers} trigger={trigger} setCurrentUsers={setCurrentUsers} />
       <ReactPaginate
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}

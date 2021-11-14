@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 // Components
 import User from "./User"
 
-const DraggableUsers = ({users}) => {
+const DraggableUsers = ({users, setCurrentUsers}) => {
 
     const [draggableUsers, setDraggableUsers] = useState(users);
 
@@ -18,8 +18,16 @@ const DraggableUsers = ({users}) => {
     }
 
     useEffect(() => {
-        setDraggableUsers(users)
+        setDraggableUsers(users);
     }, [users]);
+
+    // // Error: Infinite loop. Try to brake it when componentWillMount
+    // useEffect(() => {
+    //     // This hook acts like componentWillUnmount to pass D&D changes up to user list.
+    //     // In case if the App User changed user list by D&D and decided to disable D&D function,
+    //     // the user list may keep D&D manipulation, thanks to this hook.
+    //     return () => setCurrentUsers(draggableUsers);
+    // });
 
     return (
         <DragDropContext onDragEnd={handleOnDragEnd}>
