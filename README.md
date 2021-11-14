@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Pinsight Task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+The task is to create a simple user management CRUD Application
 
-In the project directory, you can run:
+## Pages
 
-### `yarn start`
+- Users list
+- Create a user
+- Update a user
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Fields
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Every user should at least have these fields:
+- Full Name
+- Email
+- Username
+- Password
+- Billing Plan
 
-### `yarn test`
+There should be 3 billing plans, where each one has:
+- A name
+- A price
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+All the data should be serialized and stored in localStorage.
 
-### `yarn build`
+## User List
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The User list page should consist of a data table representing the users.
+Every entry of the list should show some user data, such as Full Name / Username / Email and have two actions: Delete User and Edit User.
+There should be a create user button,
+search by username
+and a filter by billing plan fields on top of the list.
+The data table should also support pagination.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Create a User
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The page should consist of the data fields that a user has.
+All the fields should have validaton and can not be blank.
+The billing plan field should be a select component showing both the name and the price.
+On top of the page there should be a button for going back to the list
+and on the bottom there should be a save user button.
+After creating a user the page should redirect back to the list page.
 
-### `yarn eject`
+## Edit a User
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The page should be the same as the create user page with a couple of differences.
+The fields should be filled in with data from the selected user.
+The username field should not be editable.
+Also the save user button should be replaced with the update user button.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+You should use:
+- React / Redux / React Router
+- MaterialUI
+- TypeScript is a big plus
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Evaluation criteria:
+- Task completion level
+- Code quality
+- Git commits frequency and messages
 
-## Learn More
+## Timing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The time to complete the task is 1 week. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
