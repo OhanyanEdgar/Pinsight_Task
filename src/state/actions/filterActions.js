@@ -8,6 +8,6 @@ export const setFilterCriterion = criterion => {
     return {
         type: types.FILTER_CRITERION,
         payload: criterion,
-    }
-}
+    };
+};
 

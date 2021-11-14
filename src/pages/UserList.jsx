@@ -1,6 +1,6 @@
 
 // Important
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 // Actions
@@ -9,8 +9,7 @@ import { setFilterCriterion } from "../state/actions/filterActions";
 import { countUsers } from "../state/actions/usersCountActions";
 import { setUsersToShow } from "../state/actions/usersToShowActions"
 // Components
-import User from "../components/User";
-import PaginatedItems from "../components/Pagination";
+import PaginatedUsers from "../components/Pagination";
 // Icons
 import { GoHome } from 'react-icons/go';
 
@@ -19,14 +18,13 @@ const UserList = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
-    const filterCriterion = useSelector(state => state.filter)
-    const {all, week, month, year} = useSelector(state => state.counter)
-    // const [usersToShow, setUsersToShow] = useState([])
+    const filterCriterion = useSelector(state => state.filter);
+    const {all, week, month, year} = useSelector(state => state.counter);
 
     useEffect(() => {
         handleFilterUsers(filterCriterion);
         dispatch(countUsers(users));
-    }, [filterCriterion, users])
+    }, [filterCriterion, users]);
 
     const handleFilterUsers = criterion => {
         const { bill, name } = criterion;
@@ -36,7 +34,7 @@ const UserList = () => {
         const filterByName = name === "" && filterByBill ||
             filterByBill.filter(user => user.username.includes(name));
 
-        dispatch(setUsersToShow(filterByName))
+        dispatch(setUsersToShow(filterByName));
     };
 
     const handleFilterNameChange = name => {
@@ -101,8 +99,7 @@ const UserList = () => {
                     </button>
                 </div>
                 
-                {/* {usersToShow.map(user => <User user={user} key={user.id} />)} */}
-                <PaginatedItems itemsPerPage={5} />
+                <PaginatedUsers usersPerPage={5} />
             </div>
         </div>
     );

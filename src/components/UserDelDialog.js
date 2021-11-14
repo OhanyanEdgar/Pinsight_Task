@@ -8,12 +8,8 @@ import { delUser } from "../state/actions/usersActions";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
-
-
-
-
 const DialogPopUp = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { onClose, open, user } = props;
 
   const handleClose = () => {
@@ -38,34 +34,31 @@ const DialogPopUp = (props) => {
         </button>
       </div>
     </Dialog>
-  )
-
-
-}
-
+  );
+};
 
 const UserDelDialog = ({ user }) => {
 
-    const [open, setOpen] = useState(false);
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
-  
-    return (
-      <div>
-        <button className="btn btn-sm btn-danger" onClick={handleClickOpen}>Delete</button>
-        <DialogPopUp
-          user={ user }
-          open={ open }
-          onClose={ handleClose }
-        />
-      </div>
-    );
-  }
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <button className="btn btn-sm btn-danger" onClick={handleClickOpen}>Delete</button>
+      <DialogPopUp
+        user={ user }
+        open={ open }
+        onClose={ handleClose }
+      />
+    </div>
+  );
+};
 
 
 export default UserDelDialog;

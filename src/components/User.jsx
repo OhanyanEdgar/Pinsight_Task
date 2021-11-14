@@ -1,10 +1,10 @@
 
-// important
+// Important
 import { useDispatch } from "react-redux"
 import { useNavigate } from 'react-router-dom';
 // Actions
 import { editUser } from "../state/actions/editUserActions";
-
+// Components
 import DialogPopUp from "./UserDelDialog";
 
 const User = ({ user }) => {
@@ -15,7 +15,7 @@ const User = ({ user }) => {
     const handleEditUser = user => {
         dispatch(editUser(user));
         navigate("/update_user");
-    }
+    };
 
     return (
         <div className="card border-3 p-2 mt-2" style={{'width': 300+'px'}}>

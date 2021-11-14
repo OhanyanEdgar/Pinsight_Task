@@ -81,18 +81,17 @@ const Home = () => {
                 />
                 <h5 className="mt-3">Additional</h5>
                 <TaskItem 
-                    text="- Delete user button, popup dialog." 
+                    text="- Popup dialog for delete user button." 
                 />
                 <TaskItem 
                     text="- Fill fake users button. Made easy to inspect the app." 
                 />
                 <TaskItem 
-                    text="- Unable Save & Update User button, if required fields are empty." 
+                    text="- Unable Save & Update User buttons, if required fields are empty." 
                 />
                 <TaskItem 
                     text="- User counter." 
                 />
-
 
             </div>
             <div className="footer mt-3 d-flex align-items-center">
@@ -107,9 +106,8 @@ const Home = () => {
                         <p className="fw-bolder fs-5">Inspect The App</p>
                 </button>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
 export default Home;

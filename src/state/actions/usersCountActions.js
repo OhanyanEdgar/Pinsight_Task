@@ -7,5 +7,5 @@ export const countUsers = users => {
     return {
         type: types.COUNT_USERS,
         payload: users,
-    }
-}
+    };
+};

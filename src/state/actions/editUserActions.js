@@ -1,7 +1,7 @@
 
 export const types = {
     EDIT_USER: "EDIT_USER",
-}
+};
 
 export const editUser = user => {
     return {

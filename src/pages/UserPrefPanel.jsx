@@ -1,7 +1,4 @@
 
-
-
-
 // User Preferences Panel is a reusable Component, 
 // which covers different user-manipulation actions in this App.
 
@@ -15,7 +12,7 @@ import { updateUser } from "../state/actions/usersActions";
 import { editUser } from "../state/actions/editUserActions";
 // Icons
 import { AiOutlineRollback } from 'react-icons/ai';
-// Comonents
+// Components
 import PrefPanelInput from "../components/PrefPanelInput"
 
 const UserPrefPanel = ({ panelType }) => {
@@ -26,7 +23,7 @@ const UserPrefPanel = ({ panelType }) => {
     // editedUser is used as local user in case if Panel Type is "update".
     // It will be more generic to get editUser data from state when it is needed,
     // but unfortunately we cant use useSelector hook within conditions.
-    const editedUser = useSelector(state => state.editUser)
+    const editedUser = useSelector(state => state.editUser);
 
     const [user, setUser] = useState(() => {
         return panelType === "update" ? {...editedUser}:
@@ -40,8 +37,8 @@ const UserPrefPanel = ({ panelType }) => {
                 price: 0,
             },
             id: Date.now(),
-        }
-    })
+        };
+    });
     
     const [ifValid, setIfValid] = useState({
         username: panelType === 'update',
@@ -65,7 +62,7 @@ const UserPrefPanel = ({ panelType }) => {
 
     const handleBackToUserList = () => {
         dispatch(editUser({}));
-        navigate("/user_list")
+        navigate("/user_list");
     }
 
     const handleInputChange = (e) => {
@@ -161,7 +158,7 @@ const UserPrefPanel = ({ panelType }) => {
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default UserPrefPanel;

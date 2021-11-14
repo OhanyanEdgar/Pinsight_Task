@@ -5,7 +5,6 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-
 // Components
 import Home from "./pages/Home"
 import UserList from "./pages/UserList";
@@ -26,6 +25,6 @@ function App() {
     </Router>
     
   );
-}
+};
 
 export default App;

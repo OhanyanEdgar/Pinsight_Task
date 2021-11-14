@@ -6,37 +6,35 @@ import { useSelector } from "react-redux";
 // Components
 import User from "./User";
 
+const Users = ({ current }) => {
+    return current && current.map(user => <User user={user} key={user.id} />);
+};
 
-const Items = ({ currentItems }) => {
-    return currentItems && currentItems.map(user => <User user={user} key={user.id} />);
-}
-
-const PaginatedItems = ({ itemsPerPage }) => {
+const PaginatedUsers = ({ usersPerPage }) => {
   const usersToShow = useSelector(state => state.usersToShow);
-  console.log("PaginatedItems-> usersToShow:", usersToShow);
+  console.log("PaginatedUsers-> usersToShow:", usersToShow);
   const [currentUsers, setCurrentUsers] = useState(null);
   const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
+  const [userOffset, setUserOffset] = useState(0);
 
   useEffect(() => {
-      // Fetch items from another resources.
-      const endOffset = itemOffset + itemsPerPage;
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentUsers(usersToShow.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(usersToShow.length / itemsPerPage));
-      console.log("PaginatedItems-> currentUsers:", currentUsers)
-  }, [itemOffset, itemsPerPage, usersToShow]);
+      const endOffset = userOffset + usersPerPage;
+      console.log(`Loading users from ${userOffset} to ${endOffset}`);
+      setCurrentUsers(usersToShow.slice(userOffset, endOffset));
+      setPageCount(Math.ceil(usersToShow.length / usersPerPage));
+      console.log("PaginatedUsers -> currentUsers:", currentUsers);
+  }, [userOffset, usersPerPage, usersToShow]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (e) => {
-      const newOffset = e.selected * itemsPerPage % usersToShow.length;
+      const newOffset = e.selected * usersPerPage % usersToShow.length;
       console.log(`User requested page number ${e.selected}, which is offset ${newOffset}`);
-      setItemOffset(newOffset);
+      setUserOffset(newOffset);
   };
 
   return (
     <>
-      <Items currentItems={currentUsers} />
+      <Users current={currentUsers} />
       <ReactPaginate
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
@@ -59,4 +57,4 @@ const PaginatedItems = ({ itemsPerPage }) => {
 }
 
 
-export default PaginatedItems;
+export default PaginatedUsers;

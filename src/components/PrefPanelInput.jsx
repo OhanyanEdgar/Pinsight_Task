@@ -11,7 +11,7 @@ const PrefPanelInput = ({ type, name, placeholder, value, errorLog, disabled, if
             <label htmlFor={name}>{ placeholder }</label>
             <div className="invalid-feedback">{ errorLog }</div>
         </div>
-    )
-}
+    );
+};
 
 export default PrefPanelInput;

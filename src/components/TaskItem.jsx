@@ -15,7 +15,6 @@ const TaskItem = ({ text, status }) => {
                 <span className="text-wrap badge bg-warning bg-gradient ms-1">
                     <GiSandsOfTime size={17} /> 
                 </span> 
-
             }
         </p>
     );
