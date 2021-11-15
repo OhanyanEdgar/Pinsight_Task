@@ -7,18 +7,21 @@ import { useSelector } from "react-redux";
 import DraggableUsers from "./DraggableUsers";
 import User from "./User";
 
-const Users = ({ current, trigger, setCurrentUsers }) => {
+const Users = ({ current, setCurrentUsers }) => {
 
-  return trigger &&
+  const { dNdTogle } = useSelector(state => state.controlPanel);
+  console.log("dNdTogle:", dNdTogle);
+
+  return dNdTogle &&
   current && <DraggableUsers users={current} setCurrentUsers={setCurrentUsers} /> ||
   current && current.map(user => <User user={user} key={user.id} />);
 };
 
-const PaginatedUsers = ({ usersPerPage, trigger }) => {
-  const usersToShow = useSelector(state => state.usersToShow);
+const PaginatedUsers = () => {
 
+  const { usersPerPage } = useSelector(state => state.controlPanel);
+  const { usersToShow } = useSelector(state => state);
   const [currentUsers, setCurrentUsers] = useState(null);
-
   const [pageCount, setPageCount] = useState(0);
   const [userOffset, setUserOffset] = useState(0);
 
@@ -38,7 +41,7 @@ const PaginatedUsers = ({ usersPerPage, trigger }) => {
 
   return (
     <>
-      <Users current={currentUsers} trigger={trigger} setCurrentUsers={setCurrentUsers} />
+      <Users current={currentUsers} setCurrentUsers={setCurrentUsers} />
       <ReactPaginate
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
