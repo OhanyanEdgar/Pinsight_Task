@@ -10,7 +10,6 @@ import User from "./User";
 const Users = ({ current, setCurrentUsers }) => {
 
   const { dNdTogle } = useSelector(state => state.controlPanel);
-  console.log("dNdTogle:", dNdTogle);
 
   return dNdTogle &&
   current && <DraggableUsers users={current} setCurrentUsers={setCurrentUsers} /> ||
@@ -32,18 +31,22 @@ const PaginatedUsers = () => {
       setPageCount(Math.ceil(usersToShow.length / usersPerPage));
   }, [userOffset, usersPerPage, usersToShow]);
 
+  useEffect(() => handlePageClick(0), [usersPerPage])
+
   // Invoke when user click to request another page.
-  const handlePageClick = (e) => {
-      const newOffset = e.selected * usersPerPage % usersToShow.length;
-      console.log(`User requested page number ${e.selected}, which is offset ${newOffset}`);
-      setUserOffset(newOffset);
+  const handlePageClick = (selected) => {
+    console.log('selected:', selected);
+    const newOffset = selected * usersPerPage % usersToShow.length;
+    console.log(`User requested page number ${selected}, which is offset ${newOffset}`);
+    setUserOffset(newOffset);
   };
 
   return (
     <>
       <Users current={currentUsers} setCurrentUsers={setCurrentUsers} />
       <ReactPaginate
-        onPageChange={handlePageClick}
+        onPageChange={e => handlePageClick(e.selected)}
+        // onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={1}
         pageCount={pageCount}
