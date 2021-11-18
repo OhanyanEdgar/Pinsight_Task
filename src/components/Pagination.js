@@ -31,7 +31,7 @@ const PaginatedUsers = () => {
       setPageCount(Math.ceil(usersToShow.length / usersPerPage));
   }, [userOffset, usersPerPage, usersToShow]);
 
-  useEffect(() => handlePageClick(0), [usersPerPage])
+  useEffect(() => handlePageClick(0), [usersPerPage, usersToShow])
 
   // Invoke when user click to request another page.
   const handlePageClick = (selected) => {
