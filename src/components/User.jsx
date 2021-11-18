@@ -14,8 +14,9 @@ const User = ({ user }) => {
 
     const handleEditUser = user => {
         dispatch(editUser(user));
-        navigate("/update_user");
+        navigate(`/update_user/${user.username}`);
     };
+
 
     return (
         <div className="card border-3 p-2 mt-2" style={{'width': 350+'px'}}>
